@@ -1,0 +1,29 @@
+﻿<template>
+    <div ref="parent" class="gamemap">
+        <canvas ref="canvas"></canvas>
+    </div>
+</template>
+
+<script setup>
+import { onMounted, ref } from 'vue';
+import { GameMap } from '../assets/scripts/GameMap';
+
+let parent = ref(null);
+let canvas = ref(null);
+
+onMounted(() => {
+    new GameMap(canvas.value.getContext('2d'), parent.value)
+});
+
+</script>
+
+<style scoped>
+div.gamemap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+</style>
