@@ -36,16 +36,16 @@ let last_timestamp;
 const step = timestamp => {
     for (let obj of AC_GAME_OBJECTS) {
         if (!obj.has_called_start) {
-            obj.start();
             obj.has_called_start = true;
+            obj.start();
         } else {
             obj.timedelta = timestamp - last_timestamp;
             obj.update();
         }
 
-        last_timestamp = timestamp;
     }
-
+    
+    last_timestamp = timestamp;
     requestAnimationFrame(step)
 }
 
