@@ -101,6 +101,28 @@ export class GameMap extends AcGameObject {
         return true;
     }
 
+    check_vaild(cell) { // 检测障碍物
+        for (const wall of this.walls) {
+            if (wall.r === cell.r && wall.c === cell.c) {
+                return false;
+            }
+        }
+
+        for (const snake of this.snakes) {
+            let k = snake.cells.length;
+            if (!snake.check_tail_increasing()) {
+                k -- ;
+            }
+            for (let i = 0; i < k; i ++ ) {
+                if (snake.cells[i].r === cell.r && snake.cells[i].c === cell.c) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
     next_step() { // 让两条蛇进入下一个回合
         for (const snake of this.snakes) {
             snake.next_step();
@@ -118,17 +140,11 @@ export class GameMap extends AcGameObject {
 
         const [snake0, snake1] = this.snakes;
         this.ctx.canvas.addEventListener("keydown", e => {
-            if (e.key === 'w') {
-                snake0.set_directon(0);
-                console.log(snake0.direction)
-            }
+            if (e.key === 'w') snake0.set_directon(0);
             else if (e.key === 'd') snake0.set_directon(1);
             else if (e.key === 's') snake0.set_directon(2);
             else if (e.key === 'a') snake0.set_directon(3);
-            else if (e.key === 'ArrowUp') {
-                snake1.set_directon(0);
-                console.log(snake1.direction)
-            }
+            else if (e.key === 'ArrowUp') snake1.set_directon(0);
             else if (e.key === 'ArrowRight') snake1.set_directon(1);
             else if (e.key === 'ArrowDown') snake1.set_directon(2);
             else if (e.key === 'ArrowLeft') snake1.set_directon(3);
