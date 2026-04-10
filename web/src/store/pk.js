@@ -5,6 +5,7 @@
         opponent_username: "",
         opponent_photo: "",
         opponent_rating: "",
+        gamemep: null
     },
     getters: {
     },
@@ -19,6 +20,9 @@
         },
         updateStatus(state, status) {
             state.status = status;
+        },
+        updateGamemep(state, gamemep) {
+            state.gamemep = gamemep;
         }
     },
     actions: {

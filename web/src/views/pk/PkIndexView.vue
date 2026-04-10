@@ -43,6 +43,7 @@ onMounted(() => {
                 photo: data.opponent_photo,
                 rating: data.opponent_rating
             });
+            store.commit("updateGamemep", data.gamemap);
             setTimeout(() => {
                 store.commit("updateStatus", "playing");
             }, 2000);
