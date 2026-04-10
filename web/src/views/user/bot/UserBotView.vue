@@ -34,11 +34,17 @@
                                 <div class="mb-3">
                                     <label for="add-bot-content" class="form-label">bot代码</label>
                                     <VAceEditor
-                                        v-model:value="botadd.content"
+                                        v-model="botadd.content"
                                         @init="editorInit"
                                         lang="c_cpp"
                                         theme="textmate"
-                                        style="height: 300px" />
+                                        style="height: 300px" 
+                                        :options="{ 
+                                            fontSize: 20, 
+                                            fontFamily: 'Consolas, Monaco, monospace',
+                                            enableBasicAutocompletion: true,
+                                            enableLiveAutocompletion: true}"
+                                    />
                                 </div>
                             </div>
                                 <div class="modal-footer">
@@ -90,11 +96,17 @@
                                                     <div class="mb-3">
                                                         <label for="add-bot-content" class="form-label">bot代码</label>
                                                         <VAceEditor
-                                                            v-model:value="bot.content"
+                                                            v-model="bot.content"
                                                             @init="editorInit"
                                                             lang="c_cpp"
                                                             theme="textmate"
-                                                            style="height: 300px" />
+                                                            style="height: 300px"
+                                                            :options="{ 
+                                                                fontSize: 20, 
+                                                                fontFamily: 'Consolas, Monaco, monospace',
+                                                                enableBasicAutocompletion: true,
+                                                                enableLiveAutocompletion: true}"
+                                                        />
                                                     </div>
                                                 </div>
                                                     <div class="modal-footer">
@@ -247,5 +259,10 @@ div.card {
 }
 div.errMsg {
     color: red;
+}
+
+:deep(.ace_editor) {
+    border: 1px solid #ced4da;
+    border-radius: 4px;
 }
 </style>
