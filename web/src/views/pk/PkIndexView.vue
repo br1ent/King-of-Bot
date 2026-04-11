@@ -1,13 +1,14 @@
 ﻿<template>
-    <PlayGround v-if="$store.state.pk.status === 'playing'">
-    </PlayGround>
+    <div>
+        <PlayGround v-if="$store.state.pk.status === 'playing'">
+        </PlayGround>
 
-    <MatchGround v-else-if="$store.state.pk.status === 'matching'">
-    </MatchGround>
+        <MatchGround v-else-if="$store.state.pk.status === 'matching'">
+        </MatchGround>
 
-    <ResultBoard v-if="$store.state.pk.loser !== 'none'">
-    </ResultBoard>
-
+        <ResultBoard v-if="$store.state.pk.loser !== 'none'">
+        </ResultBoard>
+    </div>
 </template>
 
 <script setup>
