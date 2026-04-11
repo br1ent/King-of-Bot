@@ -43,10 +43,29 @@ onMounted(() => {
                 photo: data.opponent_photo,
                 rating: data.opponent_rating
             });
-            store.commit("updateGamemep", data.gamemap);
+            store.commit("updateGame", data.game);
+            console.log("匹配成功后的信息:", data);
             setTimeout(() => {
                 store.commit("updateStatus", "playing");
-            }, 2000);
+            }, 200);
+        } else if (data.event === "move") {
+            console.log(data);
+
+            const game = store.state.pk.gameObject;
+            const [snake0, snake1] = game.snakes;
+
+            snake0.set_direction(data.a_direction);
+            snake1.set_direction(data.b_direction);
+        } else if (data.event === "result") {
+            const game = store.state.pk.gameObject;
+            const [snake0, snake1] = game.snakes;
+
+            if (data.loser === "all" || data.loser === "A") {
+                snake0.status = "die";
+            }
+            if (data.loser === "all" || data.loser === "B") {
+                snake1.status = "die";
+            }
         }
     }
 });

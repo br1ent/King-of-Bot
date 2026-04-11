@@ -46,7 +46,7 @@ const startMatch = () => {
     } else {
         btn_match.value = "开始匹配";
         store.state.pk.socket.send(JSON.stringify({
-            event: "stopt_matching"
+            event: "stop_matching"
         }));
     }
 };
