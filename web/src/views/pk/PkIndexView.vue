@@ -4,12 +4,17 @@
 
     <MatchGround v-else-if="$store.state.pk.status === 'matching'">
     </MatchGround>
+
+    <ResultBoard v-if="$store.state.pk.loser !== 'none'">
+    </ResultBoard>
+
 </template>
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue';
 import PlayGround from '../../components/PlayGround.vue';
 import MatchGround from '../../components/MatchGround.vue';
+import ResultBoard from '../../components/ResultBoard.vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -20,7 +25,7 @@ onMounted(() => {
     store.commit("updateOpponentInfo", {
         username: "我的对手",
         photo: "https://cdn.acwing.com/media/article/image/2022/08/09/1_1db2488f17-anonymous.png",
-        rating: store.state.pk.opponent_rating
+        rating: ""
     });
 
     socket = new WebSocket(socketUrl);
@@ -66,6 +71,7 @@ onMounted(() => {
             if (data.loser === "all" || data.loser === "B") {
                 snake1.status = "die";
             }
+            store.commit("updateLoser", data.loser);
         }
     }
 });
