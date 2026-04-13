@@ -23,6 +23,7 @@ let socket = null;
 const socketUrl = `ws://127.0.0.1:3000/websocket/${store.state.user.token}`;
 
 store.commit("updateLoser", "none");
+store.commit("updateIsRecord", false);
 
 onMounted(() => {
     store.commit("updateOpponentInfo", {

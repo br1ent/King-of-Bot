@@ -7,6 +7,7 @@ import UserBotView from '../views/user/bot/UserBotView.vue'
 import LoginView from '../views/user/account/LoginView.vue'
 import RegisterView from '../views/user/account/RegisterView.vue'
 import store from '../store/index'
+import RecordContentView from '../views/record/RecordContentView.vue'
 
 
 const routes = [
@@ -60,6 +61,15 @@ const routes = [
     meta: {
       requestAuth: true,
       title: "录像列表"
+    }
+  },
+  {
+    path: '/record/:recordId',
+    name: 'record_content',
+    component: RecordContentView,
+    meta: {
+      requestAuth: true,
+      title: "回放"
     }
   },
   {
