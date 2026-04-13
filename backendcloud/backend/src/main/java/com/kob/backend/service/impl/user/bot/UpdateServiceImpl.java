@@ -43,13 +43,13 @@ public class UpdateServiceImpl implements UpdateService {
             return map;
         }
 
+        if (description == null || description.isEmpty()) {
+            description = "这个用户很懒~,什么也没有留下！";
+        }
+
         if (description.length() > 100) {
             map.put("error_message", "bot描述长度不能超过100!");
             return map;
-        }
-
-        if (description == null || description.isEmpty()) {
-            description = "这个用户很懒~,什么也没有留下！";
         }
 
         if (content == null || content.isEmpty()) {

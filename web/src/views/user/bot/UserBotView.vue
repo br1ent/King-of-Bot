@@ -34,16 +34,17 @@
                                 <div class="mb-3">
                                     <label for="add-bot-content" class="form-label">bot代码</label>
                                     <VAceEditor
-                                        v-model="botadd.content"
+                                        v-model:value="botadd.content"
                                         @init="editorInit"
-                                        lang="c_cpp"
+                                        lang="java"
                                         theme="textmate"
                                         style="height: 300px" 
                                         :options="{ 
                                             fontSize: 20, 
                                             fontFamily: 'Consolas, Monaco, monospace',
                                             enableBasicAutocompletion: true,
-                                            enableLiveAutocompletion: true}"
+                                            enableLiveAutocompletion: true,
+                                            enableSnippets: true,}"
                                     />
                                 </div>
                             </div>
@@ -96,16 +97,17 @@
                                                     <div class="mb-3">
                                                         <label for="add-bot-content" class="form-label">bot代码</label>
                                                         <VAceEditor
-                                                            v-model="bot.content"
+                                                            v-model:value="bot.content"
                                                             @init="editorInit"
-                                                            lang="c_cpp"
+                                                            lang="java"
                                                             theme="textmate"
                                                             style="height: 300px"
                                                             :options="{ 
                                                                 fontSize: 20, 
                                                                 fontFamily: 'Consolas, Monaco, monospace',
                                                                 enableBasicAutocompletion: true,
-                                                                enableLiveAutocompletion: true}"
+                                                                enableLiveAutocompletion: true,
+                                                                enableSnippets: true}"
                                                         />
                                                     </div>
                                                 </div>
@@ -134,12 +136,16 @@ import { useStore } from 'vuex';
 import { reactive, ref } from 'vue';
 import {Modal} from 'bootstrap/dist/js/bootstrap'
 import { VAceEditor } from 'vue3-ace-editor';
+import 'ace-builds/src-noconflict/mode-java';
+import 'ace-builds/src-noconflict/ext-language_tools';
 import ace from 'ace-builds';
 
 ace.config.set(
     "basePath", 
     "https://cdn.jsdelivr.net/npm/ace-builds@1.4.12/src-noconflict/"
 )
+
+ace.require("ace/ext/language_tools");
 
 const store = useStore();
 let bots = ref([]);
@@ -181,10 +187,10 @@ const add_bot = () => {
         },
         success(resp) {
             if (resp.error_message === "success") {
+                Modal.getInstance("#addbot").hide();
                 botadd.title = "";
                 botadd.description = "";
                 botadd.content = "";
-                Modal.getInstance("#addbot").hide();
                 getList();
             } else {
                 botadd.errMsg = resp.error_message;

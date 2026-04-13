@@ -12,9 +12,9 @@ public class MatchingServiceImpl implements MatchingService {
     public final static MatchingPool matchingPool = new MatchingPool();
 
     @Override
-    public String addPlayer(Integer userId, Integer rating) {
-        log.info("玩家开始匹配,id: {}, 分值: {}", userId, rating);
-        matchingPool.addPlayer(userId, rating);
+    public String addPlayer(Integer userId, Integer rating, Integer botId) {
+        log.info("玩家开始匹配,id: {}, 分值: {}, bot_id: {}", userId, rating, botId);
+        matchingPool.addPlayer(userId, rating, botId);
         return "add player success!";
     }
 

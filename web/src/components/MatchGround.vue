@@ -1,7 +1,7 @@
 ﻿<template>
     <div class="matchground">
         <div class="row">
-            <div class="col-6">
+            <div class="col-4">
                 <div class="user-photo">
                     <img :src="$store.state.user.photo" alt="用户头像">
                 </div>
@@ -12,7 +12,15 @@
                     {{ $store.state.user.rating }}
                 </div>
             </div>
-            <div class="col-6">
+            <div class="col-4">
+                <div class="bot-select">
+                    <select class="form-select" v-model="select_bot">
+                        <option selected value="-1">亲自出马</option>
+                        <option v-for="bot in bots" :key="bot.id" :value="bot.id">{{ bot.title }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
                 <div class="user-photo">
                     <img :src="$store.state.pk.opponent_photo" alt="对手头像">
                 </div>
@@ -33,15 +41,19 @@
 <script setup>
 import { ref } from 'vue';
 import { useStore } from 'vuex';
+import $ from 'jquery';
 
 const store = useStore();
 let btn_match = ref("开始匹配");
+
+let select_bot = ref("-1");
 
 const startMatch = () => {
     if (btn_match.value === "开始匹配") {
         btn_match.value = "取消匹配";
         store.state.pk.socket.send(JSON.stringify({
-            event: "start_matching"
+            event: "start_matching",
+            bot_id: select_bot.value
         }));
     } else {
         btn_match.value = "开始匹配";
@@ -50,6 +62,21 @@ const startMatch = () => {
         }));
     }
 };
+
+let bots = ref([]);
+const getList = () => {
+    $.ajax({
+        url: "http://127.0.0.1:3000/user/bot/getlist",
+        type: "get",
+        headers: {
+            Authorization: "Bearer " + store.state.user.token
+        },
+        success(resp) {
+            bots.value = resp;
+        }
+    });
+}
+getList();
 
 </script>
 
@@ -91,5 +118,14 @@ div.user-rating {
 button {
     display: block;
     margin: 15vh auto;
+}
+
+div.bot-select {
+    margin: 20vh auto;
+}
+
+div.bot-select > select {
+    width: 60%;
+    margin: 0 auto;
 }
 </style>
