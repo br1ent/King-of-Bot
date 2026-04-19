@@ -71,7 +71,7 @@ const register = () => {
     errMsg.value = "";
     successMsg.value = "";
     $.ajax({
-        url: "http://127.0.0.1:3000/user/account/register",
+        url: "http://127.0.0.1:3000/api/user/account/register",
         type: "post",
         data: {
             username: username.value,
@@ -96,7 +96,6 @@ const register = () => {
 </script>
 
 <style scoped>
-/* 保持简洁，主要依赖 Bootstrap 类 */
 .form-control:focus {
     border-color: #0d6efd;
     box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);

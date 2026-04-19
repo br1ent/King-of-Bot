@@ -1,6 +1,5 @@
 package com.kob.botrunningsystem.service.impl.utils;
 
-import com.kob.botrunningsystem.utils.BotInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.joor.Reflect;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,11 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.UUID;
+import java.util.function.Supplier;
 
 @Component
 @Slf4j
@@ -40,7 +43,7 @@ public class Consumer extends Thread {
 
     // 代码类名后面也要加uid
     private String addUid(String code, String uid) {
-        int k = code.indexOf(" implements com.kob.botrunningsystem.utils.BotInterface");
+        int k = code.indexOf(" implements java.util.function.Supplier<Integer>");
 
         return code.substring(0, k) + uid + code.substring(k);
     }
@@ -51,12 +54,21 @@ public class Consumer extends Thread {
         UUID uuid = UUID.randomUUID();
         String uid = uuid.toString().substring(0, 8);
 
-        BotInterface botInterface = Reflect.compile(
+        Supplier<Integer> botInterface = Reflect.compile(
                 "com.kob.botrunningsystem.utils.Bot" + uid,
                 addUid(bot.getBotCode(), uid)
         ).create().get();
 
-        Integer direction = botInterface.nextMove(bot.getInput());
+        File file = new File("input.txt");
+
+        try (PrintWriter fout = new PrintWriter(file)) {
+            fout.println(bot.getInput());
+            fout.flush();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+        Integer direction = botInterface.get();
         log.info("移动方向, 用户id: {}, 方向: {}", bot.getUserId(), direction);
 
 
