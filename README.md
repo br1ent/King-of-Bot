@@ -125,12 +125,16 @@ npm run dev
 
 ## 🔧 配置说明
 
-### 后端配置 (application.properties)
-```properties
-server.port=3000
-spring.datasource.url=jdbc:mysql://localhost:3306/kob?serverTimezone=Asia/Shanghai
-spring.datasource.username=root
-spring.datasource.password=000000
+### 后端配置 (application.yaml)
+```yaml
+server:
+  port: 3000
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/kob?serverTimezone=Asia/Shanghai
+    username: root
+    password: "000000"
 ```
 
 ### 数据库表结构
@@ -174,24 +178,6 @@ public interface BotInterface {
 - 2: 下
 - 3: 左
 
-## 📊 API接口
-
-### 用户相关
-- `POST /user/account/login` - 用户登录
-- `POST /user/account/register` - 用户注册
-- `GET /user/account/info` - 获取用户信息
-
-### 机器人相关
-- `GET /user/bot/getlist` - 获取机器人列表
-- `POST /user/bot/add` - 添加机器人
-- `POST /user/bot/remove` - 删除机器人
-- `POST /user/bot/update` - 更新机器人
-
-### 对战相关
-- `POST /pk/start` - 开始匹配
-- `POST /pk/stop` - 停止匹配
-- `GET /record/getlist` - 获取对战记录
-
 ## 🔒 安全特性
 - JWT Token认证
 - Spring Security权限控制
@@ -213,6 +199,3 @@ public interface BotInterface {
 - WebSocket消息压缩
 - 数据库索引优化
 - 前端资源懒加载
-
-录像查看：
-
