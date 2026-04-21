@@ -8,13 +8,14 @@ import LoginView from '../views/user/account/LoginView.vue'
 import RegisterView from '../views/user/account/RegisterView.vue'
 import store from '../store/index'
 import RecordContentView from '../views/record/RecordContentView.vue'
+import ModeSelectView from '../views/pk/ModeSelectView.vue'
 
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    redirect: '/pk',
+    redirect: '/modeselect',
   },
   {
     path: '/home',
@@ -28,6 +29,15 @@ const routes = [
     meta: {
       requestAuth: true,
       title: "开始对战"
+    }
+  },
+  {
+    path: '/modeselect',
+    name: 'modeselect',
+    component: ModeSelectView,
+    meta: {
+      requestAuth: true,
+      title: "模式选择"
     }
   },
   {

@@ -5,7 +5,7 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <router-link :class="route_name === 'pk' ? 'nav-link active' : 'nav-link'" :to="{name: 'pk'}">
+                        <router-link :class="route_name === 'modeselect' ? 'nav-link active' : 'nav-link'" :to="{name: 'modeselect'}">
                             对战
                          </router-link>
                     </li>

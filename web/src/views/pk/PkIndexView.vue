@@ -3,12 +3,15 @@
         <PlayGround v-if="$store.state.pk.status === 'playing'">
         </PlayGround>
 
-        <MatchGround v-else-if="$store.state.pk.status === 'matching'">
+        <MatchGround v-else-if="$store.state.pk.status === 'matching' && $store.state.pk.mode === 'multiplayer'">
         </MatchGround>
 
         <ResultBoard v-if="$store.state.pk.loser !== 'none'">
         </ResultBoard>
-    </div>
+
+        <SinglePlayer v-else-if="$store.state.pk.status === 'single_player'">
+        </SinglePlayer>
+    </div>  
 </template>
 
 <script setup>
@@ -16,6 +19,7 @@ import { onMounted, onUnmounted } from 'vue';
 import PlayGround from '../../components/PlayGround.vue';
 import MatchGround from '../../components/MatchGround.vue';
 import ResultBoard from '../../components/ResultBoard.vue';
+import SinglePlayer from '../../components/SinglePlayer.vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -35,12 +39,12 @@ onMounted(() => {
     socket = new WebSocket(socketUrl);
 
     socket.onopen = () => {
-        console.log("WebSocket连接已打开");
-        store.commit("updateSocket", socket);
+        if (store.state.pk.mode === "multiplayer") {
+            store.commit("updateSocket", socket);
+        }
     };
 
     socket.onclose = () => {
-        console.log("WebSocket连接已关闭");
     };
 
     socket.onmessage = msg => {
@@ -53,13 +57,10 @@ onMounted(() => {
                 rating: data.opponent_rating
             });
             store.commit("updateGame", data.game);
-            console.log("匹配成功后的信息:", data);
             setTimeout(() => {
                 store.commit("updateStatus", "playing");
             }, 200);
         } else if (data.event === "move") {
-            console.log(data);
-
             const game = store.state.pk.gameObject;
             const [snake0, snake1] = game.snakes;
 

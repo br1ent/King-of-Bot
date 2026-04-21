@@ -1,7 +1,8 @@
 ﻿export default {
     state: {
         socket: null,
-        status: "matching", // matching:表示匹配中, playing:表示正在游戏
+        status: "mode_select", // matching:表示匹配页面, playing:表示多人游戏页面, mode_select:表示模式选择页面, singleplayer:表示单人游戏页面
+        mode: "", // singleplayer:单人游戏, multiplayer:多人游戏
         opponent_username: "",
         opponent_photo: "",
         opponent_rating: "",
@@ -14,6 +15,7 @@
         b_sy: 0,
         gameObject: null,
         loser: "none", // none, all, A, B
+        ai_difficulty: "easy", // easy: 简单, medium: 普通, hard: 困难
     },
     getters: {
     },
@@ -29,6 +31,9 @@
         updateStatus(state, status) {
             state.status = status;
         },
+        updateMode(state, mode) {
+            state.mode = mode;
+        },
         updateGame(state, game) {
             state.gamemap = game.map;
             state.a_id = game.a_id;
@@ -43,6 +48,9 @@
         },
         updateLoser(state, loser) {
             state.loser = loser;
+        },
+        updateAiDifficulty(state, difficulty) {
+            state.ai_difficulty = difficulty;
         }
     },
     actions: {
