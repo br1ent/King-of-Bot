@@ -33,6 +33,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="add-bot-content" class="form-label">bot代码</label>
+                                    <span>(目前只支持java代码噢！)</span>
                                     <VAceEditor
                                         v-model:value="botadd.content"
                                         @init="editorInit"
@@ -96,6 +97,7 @@
                                                     </div>
                                                     <div class="mb-3">
                                                         <label for="add-bot-content" class="form-label">bot代码</label>
+                                                        <span>(目前只支持java代码噢！)</span>
                                                         <VAceEditor
                                                             v-model:value="bot.content"
                                                             @init="editorInit"

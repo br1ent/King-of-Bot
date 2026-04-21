@@ -3,14 +3,11 @@
         <PlayGround v-if="$store.state.pk.status === 'playing'">
         </PlayGround>
 
-        <MatchGround v-else-if="$store.state.pk.status === 'matching' && $store.state.pk.mode === 'multiplayer'">
+        <MatchGround v-else-if="$store.state.pk.status === 'matching'">
         </MatchGround>
 
         <ResultBoard v-if="$store.state.pk.loser !== 'none'">
         </ResultBoard>
-
-        <SinglePlayer v-else-if="$store.state.pk.status === 'single_player'">
-        </SinglePlayer>
     </div>  
 </template>
 
@@ -19,7 +16,6 @@ import { onMounted, onUnmounted } from 'vue';
 import PlayGround from '../../components/PlayGround.vue';
 import MatchGround from '../../components/MatchGround.vue';
 import ResultBoard from '../../components/ResultBoard.vue';
-import SinglePlayer from '../../components/SinglePlayer.vue';
 import { useStore } from 'vuex';
 
 const store = useStore();
@@ -39,9 +35,7 @@ onMounted(() => {
     socket = new WebSocket(socketUrl);
 
     socket.onopen = () => {
-        if (store.state.pk.mode === "multiplayer") {
-            store.commit("updateSocket", socket);
-        }
+        store.commit("updateSocket", socket);
     };
 
     socket.onclose = () => {
@@ -49,7 +43,7 @@ onMounted(() => {
 
     socket.onmessage = msg => {
         const data = JSON.parse(msg.data);
-        console.log("收到消息:", data);
+        
         if (data.event === "start-matching") {
             store.commit("updateOpponentInfo", {
                 username: data.opponent_username,
@@ -66,6 +60,7 @@ onMounted(() => {
 
             snake0.set_direction(data.a_direction);
             snake1.set_direction(data.b_direction);
+            
         } else if (data.event === "result") {
             const game = store.state.pk.gameObject;
             const [snake0, snake1] = game.snakes;
